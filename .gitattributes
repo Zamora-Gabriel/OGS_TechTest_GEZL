@@ -123,4 +123,9 @@ Assets/**/*[Ll]ighting*.asset -unityyaml lfs
 *.pdf lfs
 # FMOD files
 *.bank lfs
-OGS_TechTest/Library/ filter=lfs diff=lfs merge=lfs -text
+
+# Macro for Unity YAML-based asset files.
+[attr]unityyaml -text merge=unityyamlmerge diff
+
+# Macro for all binary files that should use Git LFS.
+[attr]lfs -text filter=lfs diff=lfs merge=lfs
