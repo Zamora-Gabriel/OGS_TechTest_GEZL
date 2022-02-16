@@ -4,7 +4,7 @@
 # Unity Text
 *.meta unityyaml
 *.unity unityyaml
-*.asset unityyaml
+*.asset filter=lfs diff=lfs merge=lfs -text
 *.prefab unityyaml
 *.mat unityyaml
 *.anim unityyaml
@@ -123,9 +123,8 @@ Assets/**/*[Ll]ighting*.asset -unityyaml lfs
 *.pdf lfs
 # FMOD files
 *.bank lfs
-
 # Macro for Unity YAML-based asset files.
 [attr]unityyaml -text merge=unityyamlmerge diff
-
 # Macro for all binary files that should use Git LFS.
 [attr]lfs -text filter=lfs diff=lfs merge=lfs
+Assets/TextMesh[[:space:]]Pro/Resources/Fonts[[:space:]]&[[:space:]]Materials/LiberationSans[[:space:]]SDF.asset filter=lfs diff=lfs merge=lfs -text
