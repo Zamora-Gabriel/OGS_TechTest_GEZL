@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Enumerators for the available options to select
 public enum SELECTEDOPTION
 {
     FUSION,
@@ -10,6 +11,8 @@ public enum SELECTEDOPTION
     MIX
 }
 
+
+// Enumerators for the available families to select
 public enum SELECTEDFAMILY
 {
     RED,
@@ -17,5 +20,13 @@ public enum SELECTEDFAMILY
     GREEN,
     CYAN,
     BLUE,
-    PURPLE
+    MAGENTA
+}
+
+
+// Language enumerators
+public enum LANGUAGE
+{
+    ENG,
+    ESP
 }
