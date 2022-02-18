@@ -43,3 +43,15 @@ public enum SELECTEDITEM
     DEEPBLUE,
     PURPLE
 }
+
+// Enumerators for the materials
+public enum MATERIAL
+{
+    WHITE,
+    RED,
+    YELLOW,
+    GREEN,
+    CYAN,
+    BLUE,
+    MAGENTA
+}
