@@ -8,8 +8,6 @@ public class AlchemyMenuManager : MonoBehaviour
 {
 	[SerializeField] public int numberOfOptions = 4;
 	[SerializeField] public int numberOfFamilies = 6;
-	[SerializeField] public GameObject rightClickMenu;
-
 
 	[Header("Option Selection Events")]
 	[SerializeField] UnityEvent fusionEvent;
@@ -17,22 +15,25 @@ public class AlchemyMenuManager : MonoBehaviour
 	[SerializeField] UnityEvent forgeEvent;
 	[SerializeField] UnityEvent mixEvent;
 
+	// Place the wheel item manager's function to change color selection wheel
 	[Header("Family Selected Event")]
 	[SerializeField] UnityEvent<SELECTEDFAMILY> familyEvent;
 
-	/*[Header("Button Events")]
-	[SerializeField] UnityEvent insideButtonEvent;
-	[SerializeField] UnityEvent outsideButtonEvent;
-	[SerializeField] UnityEvent confirmButtonEvent;*/
+	// Select the correct trade table for the item selected
+	[Header("Item Event")]
+	[SerializeField] UnityEvent<SELECTEDITEM> itemEvent;
 
-	[Header("Toast Variables")]
-	[SerializeField] GameObject toastDisplay;
-	[SerializeField] TextMeshProUGUI toastTMP;
-	[SerializeField] float toastDisplayTime = 1f;
+	[Header("Translator Objects")]
+	[SerializeField] GameObject msgDisplay;
+	[SerializeField] TranslatorScript translator;
 
 	// Enumerators for selected options and families
 	private SELECTEDOPTION optionSelected = SELECTEDOPTION.FORGE;
 	private SELECTEDFAMILY familySelected = SELECTEDFAMILY.RED;
+	private SELECTEDITEM itemSelected = SELECTEDITEM.PURERED;
+	
+	// For the current index in the wheel of items
+	private int selectedItemIndex;
 
 	// Flags for states
 	private bool isOptionSelected = false;
@@ -41,13 +42,10 @@ public class AlchemyMenuManager : MonoBehaviour
 	// Getters
 	public SELECTEDOPTION OptionSelected => optionSelected;
 	public SELECTEDFAMILY FamilySelected => familySelected;
+	public SELECTEDITEM ItemSelected => itemSelected;
+	public int SelectedItemIndex => selectedItemIndex;
 	public bool IsOptionSelected => isOptionSelected;
 	public bool IsFamilySelected => isFamilySelected;
-
-	private void Awake()
-	{
-		Dictionary.ResetLanguage();
-	}
 
 	// Singleton for the alchemy menu manager
 	public static AlchemyMenuManager shared;
@@ -108,7 +106,10 @@ public class AlchemyMenuManager : MonoBehaviour
 				mixEvent.Invoke();
 				break;
 		}
-    }
+
+		// Call the function to change the description and titles
+		translator.MessageChanger();
+	}
 
 	// Family related functions
 	public void SetFamily(SELECTEDFAMILY newFamily)
@@ -121,36 +122,30 @@ public class AlchemyMenuManager : MonoBehaviour
 	// Check family selected and invoke corresponding event
 	private void UpdateFamilyUI()
 	{
-		switch (familySelected)
-		{
-			case SELECTEDFAMILY.RED:
-				familyEvent.Invoke(FamilySelected);
-				break;
-			case SELECTEDFAMILY.YELLOW:
-				familyEvent.Invoke(FamilySelected);
-				break;
-			case SELECTEDFAMILY.GREEN:
-				familyEvent.Invoke(FamilySelected);
-				break;
-			case SELECTEDFAMILY.CYAN:
-				familyEvent.Invoke(FamilySelected);
-				break;
-			case SELECTEDFAMILY.BLUE:
-				familyEvent.Invoke(FamilySelected);
-				break;
-			default:
-				familyEvent.Invoke(FamilySelected);
-				break;
-		}
+		// invoke the family selected event
+		familyEvent.Invoke(FamilySelected);
 	}
 
-	public void MessageChanger(string msg)
+
+	// item related functions
+	public void SetItem(SELECTEDITEM newItem, int itemIndex)
 	{
-		// Update message of the toast
-		toastTMP.text = msg;
+		itemSelected = newItem;
+		selectedItemIndex = itemIndex;
+		UpdateItemUI();
 	}
 
-	public void Toast()
+	// Check Option selected and invoke corresponding event
+	private void UpdateItemUI()
+	{
+		// invoke the item event
+		itemEvent.Invoke(ItemSelected);
+
+		// Call the function to change the description and titles
+		translator.MessageChanger();
+	}
+
+	/*public void Toast()
 	{
 		// Prevent toast coroutine spam
 		StopAllCoroutines();
@@ -166,7 +161,7 @@ public class AlchemyMenuManager : MonoBehaviour
 		toastDisplay.GetComponent<Animator>().SetTrigger("Disappear");
 		yield return new WaitForSeconds(toastDisplayTime);
 		toastDisplay.SetActive(false);
-	}
+	}*/
 
 	public void ToggleOptionSelectedFlag(bool option)
     {

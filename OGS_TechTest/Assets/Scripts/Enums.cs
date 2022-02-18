@@ -30,3 +30,16 @@ public enum LANGUAGE
     ENG,
     ESP
 }
+
+// Enumerators for the available items to select
+public enum SELECTEDITEM
+{
+    PURERED,
+    CRIMSON,
+    PUREYELLOW,
+    ORANGE,
+    EMERALD,
+    TURQUOISE,
+    DEEPBLUE,
+    PURPLE
+}

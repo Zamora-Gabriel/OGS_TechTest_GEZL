@@ -22,18 +22,23 @@ public class SelectionController : MonoBehaviour
             return;
         }
 
-        // Debug.Log($"{collision.gameObject.name}");
+        // Set options if option selected flag is false
         if (!manager.IsOptionSelected)
         {
-            Debug.Log(collision.gameObject.name);
             manager.SetOption(collision.gameObject.GetComponent<OptionInformation>().option);
             return;
         }
 
+
+        // Set families if family selected flag is false
         if (!manager.IsFamilySelected)
         {
             manager.SetFamily(collision.gameObject.GetComponent<FamilyInformation>().family);
             return;
         }
+
+        Debug.Log(collision.gameObject.name);
+        ItemInformation myInformation = collision.gameObject.GetComponent<ItemInformation>();
+        manager.SetItem(myInformation.itemType, myInformation.index);
     }
 }

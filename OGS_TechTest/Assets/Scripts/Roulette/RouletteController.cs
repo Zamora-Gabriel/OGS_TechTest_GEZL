@@ -58,9 +58,13 @@ public class RouletteController : MonoBehaviour, IDragHandler, IBeginDragHandler
         {
             SetOptionAngle();
         }
-        else
+        else if(!AlchemyMenuManager.Instance.IsFamilySelected)
         {
             SetFamilyAngle();
+        }
+        else
+        {
+            SetItemWheelAngle();
         }
         CenterRoulette();
     }
@@ -115,6 +119,12 @@ public class RouletteController : MonoBehaviour, IDragHandler, IBeginDragHandler
                 _angleToAdjust = _rouletteItemCenters[5];
                 break;
         }
+    }
+
+    // Rune Fitem angles
+    private void SetItemWheelAngle()
+    {
+        _angleToAdjust = _rouletteItemCenters[AlchemyMenuManager.Instance.SelectedItemIndex];
     }
 
     IEnumerator CenterToAngle()
