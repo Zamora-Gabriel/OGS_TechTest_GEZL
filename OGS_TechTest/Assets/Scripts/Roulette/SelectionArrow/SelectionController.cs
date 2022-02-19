@@ -37,7 +37,6 @@ public class SelectionController : MonoBehaviour
             return;
         }
 
-        Debug.Log(collision.gameObject.name);
         ItemInformation myInformation = collision.gameObject.GetComponent<ItemInformation>();
         manager.SetItem(myInformation.itemType, myInformation.index);
     }

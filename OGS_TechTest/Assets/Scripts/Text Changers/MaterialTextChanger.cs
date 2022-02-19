@@ -12,13 +12,13 @@ public class MaterialTextChanger : MonoBehaviour
     private void Start()
     {
         // Subscribe to event
-        TextEvent.instance.onChangedQuantity += ChangeMaterialNumber;
+        TextEvent.instance.onChangedMatNumber += ChangeMaterialNumber;
     }
 
     private void OnDestroy()
     {
         // UnSubscribe to event
-        TextEvent.instance.onChangedQuantity -= ChangeMaterialNumber;
+        TextEvent.instance.onChangedMatNumber -= ChangeMaterialNumber;
     }
 
     private void ChangeMaterialNumber()
@@ -27,7 +27,7 @@ public class MaterialTextChanger : MonoBehaviour
         {
             int matToConsume = ItemTextManager.Instance.MaterialNumToConsume[(int)_materialColor];
             int matRequired = ItemTextManager.Instance.MaterialNumRequired[(int)_materialColor];
-            Debug.Log($"{matToConsume} / {matRequired}");
+            
             _thisMatNumberText.text = $"{matToConsume} / {matRequired}";
         }
 

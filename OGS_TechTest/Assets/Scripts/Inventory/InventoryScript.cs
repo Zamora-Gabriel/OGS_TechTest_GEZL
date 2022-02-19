@@ -43,7 +43,6 @@ public class InventoryScript : MonoBehaviour
             {
                 itemsByMaterial[i] = DivisionResult(_materialQuantities[i], matRequirements[i]);
 
-                Debug.Log($"item no. {i}, quantity {itemsByMaterial[i]}");
                 // Ternary operator to get the max items that can be made
                 maxQuantityItems = itemsByMaterial[i] < maxQuantityItems ? itemsByMaterial[i] : maxQuantityItems;
             }
@@ -52,7 +51,7 @@ public class InventoryScript : MonoBehaviour
         // Update UI for material requirements
         ItemTextManager.Instance.SetMatRequired(matRequirements);
 
-        Debug.Log($"The maximum number of items that can be made is: {maxQuantityItems}");
+        // return the maximun number of items that can be made
         return (int)maxQuantityItems;
     }
 

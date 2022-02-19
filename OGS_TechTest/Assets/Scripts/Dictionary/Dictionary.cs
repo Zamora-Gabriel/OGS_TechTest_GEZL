@@ -60,4 +60,36 @@ public static class Dictionary
         "Forjar",
         "Mezclar"
     };
+
+    public static List<string> itemResultsEng = new List<string>
+    {
+        "White Particles",
+        "Pure Red Rune",
+        "Crimson Rune",
+        "Pure Yellow Rune",
+        "Orange Rune",
+        "Emerald Rune",
+        "Turquoise Rune",
+        "Deep Blue Rune",
+        "Purple Rune"
+    };
+
+    public static List<string> itemResultsEsp = new List<string>
+    {
+        "Partìculas Blancas",
+        "Runa Roja Pura",
+        "Runa Carmesí",
+        "Runa Amarilla Pura",
+        "Runa Naranja",
+        "Runa Esmeralda",
+        "Runa Turquesa",
+        "Runa Azul Profundo",
+        "Runa Morada"
+    };
+
+    public static Dictionary<string, string> wordDictionary = new Dictionary<string, string>()
+    {
+        ["quantityEng"] = "Quantity",
+        ["quantityEsp"] = "Cantidad",
+    };
 }

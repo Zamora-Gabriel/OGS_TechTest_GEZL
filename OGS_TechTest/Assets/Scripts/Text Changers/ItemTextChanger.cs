@@ -7,19 +7,19 @@ public class ItemTextChanger : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _thisItemTMP;
 
-    private void OnEnable()
+    private void Start()
     {
         // Subscribe to event
-        TextEvent.instance.onChangedMatNumber += ChangeItemNumber;
+        TextEvent.instance.onChangedQuantity += ChangeItemNumber;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         // UnSubscribe to event
-        TextEvent.instance.onChangedMatNumber -= ChangeItemNumber;
+        TextEvent.instance.onChangedQuantity -= ChangeItemNumber;
     }
 
-    private void ChangeItemNumber()
+    public void ChangeItemNumber()
     {
         _thisItemTMP.text = ItemTextManager.Instance.ItemNumToMake.ToString();
     }

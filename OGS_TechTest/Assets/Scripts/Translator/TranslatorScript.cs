@@ -15,6 +15,10 @@ public class TranslatorScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] outerWheelOptionText = new TextMeshProUGUI[4];
     [SerializeField] TextMeshProUGUI[] wheelOptionText = new TextMeshProUGUI[4];
 
+    [Header("Result Text")]
+    [SerializeField] TextMeshProUGUI resultNameTMP;
+    [SerializeField] TextMeshProUGUI quantityResultTMP;
+
     private AlchemyMenuManager manager;
 
     private void Awake()
@@ -48,14 +52,36 @@ public class TranslatorScript : MonoBehaviour
             descriptionTMP.text = Dictionary.englishAlchTexts[(int)manager.OptionSelected];
             themeTMP.text = Dictionary.alchemyOptionsEng[(int)manager.OptionSelected];
             bttnTMP.text = Dictionary.alchemyOptionsEng[(int)manager.OptionSelected];
+            ItemResultText(true);
+            quantityResultTMP.text = $"{Dictionary.wordDictionary["quantityEng"]}: ";
             languageBttnTMP.text = "EN";
             return;
         }
 
         descriptionTMP.text = Dictionary.spanishAlchTexts[(int)manager.OptionSelected];
         themeTMP.text = Dictionary.alchemyOptionsEsp[(int)manager.OptionSelected];
-        bttnTMP.text = Dictionary.alchemyOptionsEsp[(int)manager.OptionSelected];
+        bttnTMP.text = Dictionary.alchemyOptionsEsp[(int)manager.OptionSelected]; 
+        ItemResultText(false);
+        quantityResultTMP.text = $"{Dictionary.wordDictionary["quantityEsp"]}: ";
         languageBttnTMP.text = "ES";
+    }
+
+    private void ItemResultText(bool isEnglish)
+    {
+        List<string> text = Dictionary.itemResultsEsp;
+        
+        if (isEnglish)
+        {
+            text = Dictionary.itemResultsEng;
+        }
+
+        if (manager.OptionSelected == SELECTEDOPTION.FUSION)
+        {
+            resultNameTMP.text = text[0];
+            return;
+        }
+        resultNameTMP.text = text[(int)manager.ItemSelected + 1];
+        return;
     }
 
     private void WheelOptionTextChanger()

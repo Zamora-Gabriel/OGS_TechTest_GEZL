@@ -64,11 +64,8 @@ public class ItemTextManager : MonoBehaviour
 	// Setter for the materials to consume
 	public void SetMatToConsume(int[] matToConsume)
     {
-		for (int i = 0; i < matToConsume.Length - 1; i++)
-		{
-			// Set the materials to consume
-			materialNumberToConsume[i] = matToConsume[i];
-		}
+		// Set the materials to consume
+		materialNumberToConsume = matToConsume;
 	}
 
 	// Seter for the materials to consume

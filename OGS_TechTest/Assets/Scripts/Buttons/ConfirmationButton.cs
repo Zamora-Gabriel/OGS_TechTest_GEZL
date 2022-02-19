@@ -21,6 +21,28 @@ public class ConfirmationButton : MonoBehaviour, IPointerDownHandler, IPointerUp
     [SerializeField] UnityEvent mixOperation;
 
     private bool _enabled = true;
+    private bool _areItemsMoreThanZero = true;
+
+    private void Start()
+    {
+        // Subscribe to event
+        TextEvent.instance.onChangedQuantity += ChangeItemNumber;
+    }
+
+    private void OnDestroy()
+    {
+        // UnSubscribe to event
+        TextEvent.instance.onChangedQuantity -= ChangeItemNumber;
+    }
+
+    private void ChangeItemNumber()
+    {
+        if (_enabled)
+        {
+            _areItemsMoreThanZero = ItemTextManager.Instance.ItemNumToMake > 0;
+            _bttnImage.color = _areItemsMoreThanZero ? _bttnImage.color = new Color(1, 1, 1, 1f) : new Color(1, 1, 1, 0.3f);
+        }
+    }
 
     // Disable/Enable image
     public void ButtonEnable(bool enable)
@@ -63,13 +85,15 @@ public class ConfirmationButton : MonoBehaviour, IPointerDownHandler, IPointerUp
             yield return null;
         }
 
+        ReleaseCharge();
+
         // Invoke operation according to the selected one
         UpdateOptionUI();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (_enabled)
+        if (_enabled && _areItemsMoreThanZero)
         {
             // Start charging
             StartCoroutine(LerpBar());
