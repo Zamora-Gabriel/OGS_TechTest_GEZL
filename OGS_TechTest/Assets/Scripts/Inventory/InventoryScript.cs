@@ -20,6 +20,8 @@ public class InventoryScript : MonoBehaviour
 
     private int[] matRequirements;
 
+    private int[] materialsToBeConsumed = new int[7];
+
     public int[] MaterialQuantities => _materialQuantities;
 
     public int CheckMaxQuantity()
@@ -27,6 +29,10 @@ public class InventoryScript : MonoBehaviour
         // Maximum amount of items that can be made with the actual materials
         matRequirements = TradeTableValues.MaterialRequirements(AlchemyMenuManager.Instance.OptionSelected, AlchemyMenuManager.Instance.ItemSelected);
         int[] itemsByMaterial = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+        // Start materials to consume in 0
+        ItemTextManager.Instance.SetMatToConsume(itemsByMaterial);
+
         // Number for the max quantity items that can be made with actual materials, start at infinity to be decreasing afterwards
         float maxQuantityItems = Mathf.Infinity;
 
@@ -43,6 +49,9 @@ public class InventoryScript : MonoBehaviour
             }
         }
 
+        // Update UI for material requirements
+        ItemTextManager.Instance.SetMatRequired(matRequirements);
+
         Debug.Log($"The maximum number of items that can be made is: {maxQuantityItems}");
         return (int)maxQuantityItems;
     }
@@ -58,6 +67,22 @@ public class InventoryScript : MonoBehaviour
         return 0;
     }
 
+    // Calculate the values for each material to be consumed
+    public void CalculateMaterialsToConsume(int quantity)
+    {
+        
+        for (int i = 0; i < matRequirements.Length-1; i++)
+        {
+            // Check every material's needs if it is 0 is not a required item
+            materialsToBeConsumed[i] = matRequirements[i] * quantity;
+        }
+
+        // Start materials to consume in 0
+        ItemTextManager.Instance.SetMatToConsume(materialsToBeConsumed);
+    }
+
+
+    // Adding and substracting operations with materials and items
     public void AddMaterials(int materialIndex, int quantity)
     {
         _materialQuantities[materialIndex] += quantity;
@@ -65,7 +90,7 @@ public class InventoryScript : MonoBehaviour
 
     public void SubstractMaterials(int materialIndex, int quantity)
     {
-        _materialQuantities[materialIndex] -= matRequirements[materialIndex] * quantity;
+        _materialQuantities[materialIndex] -= materialsToBeConsumed[materialIndex];
     }
 
     public void AddItem(int quantity)

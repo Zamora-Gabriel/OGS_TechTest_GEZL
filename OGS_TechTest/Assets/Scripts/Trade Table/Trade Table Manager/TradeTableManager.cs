@@ -35,12 +35,18 @@ public class TradeTableManager : MonoBehaviour
         UIObjectDeactivator((int)itemSelection);
         _maxItemQuantity = _inventory.CheckMaxQuantity();
         _valSlider.maxValue = _maxItemQuantity;
+
+        // Update Ui text by invoking an Event
+        TextEvent.instance.ChangedQuantity();
     }
 
     public void UpdateFusionUI()
     {
         _maxItemQuantity = _inventory.CheckMaxQuantity();
         _valSlider.maxValue = _maxItemQuantity;
+
+        // Update Ui text by invoking an Event
+        TextEvent.instance.ChangedQuantity();
     }
 
     // Activate only selected family's items
@@ -61,7 +67,21 @@ public class TradeTableManager : MonoBehaviour
 
     public void Trade()
     {
-        if (_manager.OptionSelected == SELECTEDOPTION.FUSION)
+        switch (_manager.OptionSelected)
+        {
+            case SELECTEDOPTION.FUSION:
+                FusionTrade();
+                break;
+            case SELECTEDOPTION.DISCOVER:
+                break;
+            case SELECTEDOPTION.FORGE:
+                break;
+            default:
+                MixTrade();
+                break;
+        }
+        
+        /*if (_manager.OptionSelected == SELECTEDOPTION.FUSION)
         {
             FusionTrade();
         }
@@ -69,7 +89,7 @@ public class TradeTableManager : MonoBehaviour
         if (_manager.OptionSelected == SELECTEDOPTION.MIX)
         {
             MixTrade();
-        }
+        }*/
     }
 
     private void FusionTrade()
@@ -107,6 +127,12 @@ public class TradeTableManager : MonoBehaviour
         _valSlider.value = int.Parse(_inputField.text);
 
         _quantitySelected = (int)Mathf.Floor(_valSlider.value);
+
+        // Calculate the materials that will be consumed
+        _inventory.CalculateMaterialsToConsume(_quantitySelected);
+
+        // Update the materials and items texts inside the trade table
+        UpdateMaterialAndItemsUI();
     }
 
     // slider functions
@@ -121,6 +147,12 @@ public class TradeTableManager : MonoBehaviour
 
         _inputField.text = ((int)Mathf.Floor(_valSlider.value)).ToString();
         _quantitySelected = (int)Mathf.Floor(_valSlider.value);
+
+        // Calculate the materials that will be consumed
+        _inventory.CalculateMaterialsToConsume(_quantitySelected);
+
+        // Update the materials and items texts inside the trade table
+        UpdateMaterialAndItemsUI();
     }
 
     // Button functions
@@ -129,6 +161,12 @@ public class TradeTableManager : MonoBehaviour
         _valSlider.value += 1;
         _inputField.text = ((int)Mathf.Floor(_valSlider.value)).ToString();
         _quantitySelected = (int)Mathf.Floor(_valSlider.value);
+
+        // Calculate the materials that will be consumed
+        _inventory.CalculateMaterialsToConsume(_quantitySelected);
+
+        // Update the materials and items texts inside the trade table
+        UpdateMaterialAndItemsUI();
     }
 
     public void DecrementQuantity()
@@ -136,5 +174,20 @@ public class TradeTableManager : MonoBehaviour
         _valSlider.value -= 1;
         _inputField.text = ((int)Mathf.Floor(_valSlider.value)).ToString();
         _quantitySelected = (int)Mathf.Floor(_valSlider.value);
+
+        // Calculate the materials that will be consumed
+        _inventory.CalculateMaterialsToConsume(_quantitySelected);
+
+        // Update the materials and items texts inside the trade table
+        UpdateMaterialAndItemsUI();
+    }
+
+    private void UpdateMaterialAndItemsUI()
+    {
+        ItemTextManager.Instance.SetItemQuantity(_quantitySelected);
+
+        // Update Ui text by invoking an Event
+        TextEvent.instance.ChangedQuantity();
+        TextEvent.instance.ChangedMaterialNumber();
     }
 }
