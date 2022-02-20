@@ -35,6 +35,8 @@ Instructions:
 
 - Open Alchemy Scene Mobile if it is not open.
 
+- In the Game window change Free Aspect to 16:9 Portrait.
+
 - Click play button in unity and start by dragging the wheel to the left or right.
 
 - Select the language you want by clicking the top left button to change between Spanish and English.

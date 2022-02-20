@@ -37,6 +37,8 @@ Instrucciones:
 
 - Abra la escena Alchemy Scene Mobile si no se encuentra abierta.
 
+- En la ventana Game cambie Free Aspect a 16:9 Portrait.
+
 - Haga click en el botón de play en Unity e inicie por arrastrar la rueda hacia la izquierda o derecha.
 
 - Seleccione el lenguaje que guste por medio de hacer click en el botón de la esquina superior izquierda
